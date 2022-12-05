@@ -1,13 +1,33 @@
-class Player extends DynamicEntity {
+class Player extends DynamicEntity implements Collidable {
 
+  private RectCollisionShape shape = new RectCollisionShape((Entity) this, 50, 50);
 
   Player() {
     this.speed = 5;
-    this.size = 50;
+    this.location = new PVector(width/2, height/2);
+    //this.shape = new RectCollisionShape((Entity) this, 50, 50);
+    //this.size = 50;
+  }
+  
+  CollisionShape getShape() {
+    return this.shape;
+  }
+  
+  void collideWith(Collidable collidable) {
+    Entity other = (Entity) collidable;
+    if(other == this) {
+      return;
+    }
+    if(this.shape.hasCollided(other, collidable.getShape())) {
+      if(other instanceof Solid) {
+        location.sub(this.velocity);
+      }
+    }
   }
 
   void render() {
-    circle(this.location.x, this.location.y, this.size);
+    //circle(this.location.x, this.location.y, this.size);
+    rect(this.location.x, this.location.y, shape.rectWidth, shape.rectHeight);
   }
 
   void update() {
