@@ -2,6 +2,7 @@ class Game {
 
   void start(){
     DynamicEntity player = new Player();
+    //DynamicEntity enemy  = new Enemy();
     Entity wall1 = new Wall(new PVector(0,0), 5, height);
     Entity wall2 = new Wall(new PVector(width - 5,0), 5, height);
     Entity wall3 = new Wall(new PVector(0,0), width, 5);
