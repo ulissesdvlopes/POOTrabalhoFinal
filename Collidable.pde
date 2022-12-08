@@ -1,4 +1,4 @@
 interface Collidable {
-  void collideWith(Collidable collidable);
+  void collideWith(CollisionShape shape);
   CollisionShape getShape();
 }

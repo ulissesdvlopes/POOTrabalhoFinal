@@ -1,38 +1,53 @@
 class Player extends DynamicEntity implements Collidable {
 
-  private RectCollisionShape shape = new RectCollisionShape((Entity) this, 50, 50);
+  private RectCollisionShape shape;
+  private int HP = 100;
 
   Player() {
     this.speed = 5;
     this.location = new PVector(width/2, height/2);
-    //this.shape = new RectCollisionShape((Entity) this, 50, 50);
-    //this.size = 50;
+    this.shape = new RectCollisionShape(this, 50, 50);
   }
   
-  CollisionShape getShape() {
+  RectCollisionShape getShape() {
     return this.shape;
   }
   
-  void collideWith(Collidable collidable) {
-    Entity other = (Entity) collidable;
-    if(other == this) {
+  int getHP() {
+    return this.HP;
+  }
+  
+  void gotHurt() {
+    if(this.HP <= 0) {
+      this.HP = 100;
       return;
     }
-    if(this.shape.hasCollided(other, collidable.getShape())) {
-      if(other instanceof Solid) {
+    println("OUUUCHHH");
+    this.HP -= 1;
+  }
+  
+  void collideWith(CollisionShape shape) {
+    if(shape.collidable == this) {
+      return;
+    }
+    if(this.shape.hasCollided(shape)) {
+      if(shape.collidable instanceof Solid) {
         location.sub(this.velocity);
+      }
+      if(shape.collidable instanceof Damageable) {
+        gotHurt();
       }
     }
   }
 
   void render() {
-    //circle(this.location.x, this.location.y, this.size);
     rect(this.location.x, this.location.y, shape.rectWidth, shape.rectHeight);
   }
 
   void update() {
     getInput();
     location.add(this.velocity);
+    //println(this.location);
   }
 
   void getInput() {

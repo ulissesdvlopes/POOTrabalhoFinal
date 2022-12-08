@@ -2,7 +2,7 @@ class CircleCollisionShape extends CollisionShape {
 
    private int circleRad;
    CircleCollisionShape(Entity e, int circleRad) {
-     super(e);
+     super((Collidable)e, e.location);
      this.circleRad = circleRad;
    }
    

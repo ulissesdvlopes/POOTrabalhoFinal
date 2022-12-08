@@ -1,9 +1,9 @@
 abstract class CollisionShape {
-  protected Entity entity;
-  CollisionShape(Entity e) {
-    entity = e;
-    if(e instanceof Collidable) {
-      World.collidables.add((Collidable) e);
-    }
+  protected Collidable collidable;
+  protected PVector location;
+  CollisionShape(Collidable e, PVector location) {
+    this.location = location;
+    collidable = e;
+    World.collidables.add(this);
   }
 }

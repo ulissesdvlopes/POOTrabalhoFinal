@@ -1,24 +1,26 @@
-class Wall extends Entity implements Collidable, Solid {
+class Trap extends Entity implements Damageable, Collidable, Solid {
 
   private RectCollisionShape shape;
-
-  Wall(PVector location, int rectWidth, int rectHeight) {
+  
+  Trap(PVector location) {
     this.location = location;
-    this.shape = new RectCollisionShape((Entity) this, rectWidth, rectHeight);
+    this.shape = new RectCollisionShape(this, 25, 50);
   }
   
-  CollisionShape getShape() {
+  RectCollisionShape getShape() {
     return this.shape;
   }
   
   void collideWith(CollisionShape shape) {
-    
+    if(shape.collidable == this) {
+      return;
+    }
   }
 
   void render() {
     pushStyle();
+    fill(200,200,200);
     noStroke();
-    fill(69,19,139);
     rect(this.location.x, this.location.y, shape.rectWidth, shape.rectHeight);
     popStyle();
   }

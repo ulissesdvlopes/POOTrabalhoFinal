@@ -1,27 +1,30 @@
-class Enemy extends DynamicEntity implements Damageable {
+class Enemy extends DynamicEntity implements Damageable, Collidable {
 
-  private CircleCollisionShape shape = new CircleCollisionShape((Entity) this, 50);
-  //private int rad = 250;
-  //private float theta = 0;
+  private CircleCollisionShape shape;
   
   Enemy() {
-    this.speed = 5;
+    this.speed = 3;
     this.location = new PVector(width/4, height/4);
+    this.shape = new CircleCollisionShape(this, 25);
   }
   
-  CollisionShape getShape() {
+  CircleCollisionShape getShape() {
     return this.shape;
   }
   
-  void collideWith(Damageable damageable) {
-    Entity other = (Entity) damageable;
-    if(other == this) {
+  void collideWith(CollisionShape shape) {
+    if(shape.collidable == this) {
       return;
     }
   }
 
   void render() {
-    circle(this.location.x, this.location.y, shape.circleRad/2);
+    pushStyle();
+    fill(139,19,40);
+    noStroke();
+    circle(this.location.x + shape.circleRad, this.location.y + shape.circleRad, shape.circleRad*2);
+    popStyle();
+    //rect(this.location.x, this.location.y, shape.circleRad*2, shape.circleRad*2);
   }
 
   void update() {
@@ -30,10 +33,14 @@ class Enemy extends DynamicEntity implements Damageable {
   }
 
   void getMove() {
-    //this.velocity.set(0, 0);
-    //location.x = width/2+cos(theta)*rad;
-    //location.y = height/2+sin(theta)*rad;
-    //theta += TWO_PI/500;
+    if(location.x <= 50) {
+      velocity.set(speed,0);
+      return;
+    }
+    if(location.x >= 200) {
+      velocity.set(-speed,0);
+      return;
+    } 
     
   
   }
