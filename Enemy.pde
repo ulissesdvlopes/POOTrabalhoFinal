@@ -13,8 +13,8 @@ class Enemy extends DynamicEntity implements Damageable {
     return this.shape;
   }
   
-  void collideWith(Damageable collidable) {
-    Entity other = (Entity) collidable;
+  void collideWith(Damageable damageable) {
+    Entity other = (Entity) damageable;
     if(other == this) {
       return;
     }
@@ -35,11 +35,6 @@ class Enemy extends DynamicEntity implements Damageable {
     //location.y = height/2+sin(theta)*rad;
     //theta += TWO_PI/500;
     
-  //if (mouseX > 180 && mouseX < 220 && mouseY > 130 && mouseY < 170) {
-  //  fill(0);
-  //} 
-  //else {
-  //  fill(255);
-  //}
+  
   }
 }
